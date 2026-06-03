@@ -1,5 +1,9 @@
 # Lab 1 - TCP Command Server
 
+************************************************
+TEST PUSH
+************************************************
+
 In this lab, you will extend a simple TCP echo server into a small command-based TCP server.
 
 The lecture example showed a basic client/server program where the client sends text and the server echoes the same text back. This lab builds on that idea by adding a simple command protocol.
