@@ -19,7 +19,8 @@ const rl = readline.createInterface({
 socket.on("data", (data) => {
   process.stdout.write(data);
 
-  if (!socket.destroyed) {
+  //small change due to error being thrown after using quit command rl closed before prompt causing ERR_USE_AFTER_CLOSE
+  if (!socket.destroyed && !rl.closed) {
     rl.prompt();
   }
 });

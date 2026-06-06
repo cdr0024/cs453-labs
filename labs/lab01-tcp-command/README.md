@@ -1,12 +1,11 @@
 # Lab 1 - TCP Command Server
 
-************************************************
-TEST PUSH
-************************************************
-
 In this lab, you will extend a simple TCP echo server into a small command-based TCP server.
 
 The lecture example showed a basic client/server program where the client sends text and the server echoes the same text back. This lab builds on that idea by adding a simple command protocol.
+
+# Final Product
+This lab was edited and successfully ran in Visual Studio code on Windows 11. The latest versions of Docker, docker compose, npm, node.js, git and curl are installed. The simple TCP echo server provided was extended to include the commands ECHO, UPPER, LOWER, QUIT, and REVERSE (not required for undergraduate but I implemented it for fun). Incorrect command and empty responses are also acknowledged. The lab passed all tests for the commands.js and ran properly when I ran test runs. 
 
 ## Learning Goals
 
@@ -58,10 +57,7 @@ starter/
 4. The server must return an error for unknown commands.
 5. The server must not crash when the client sends an empty line.
 6. The README must describe the protocol.
-
-### Graduate Students
-
-7. Implement `REVERSE` or `TIME` or add a new command and document it. 
+ 
 
 ## Command Protocol
 
@@ -75,7 +71,6 @@ Commands are case-insensitive, but the command arguments should be handled as no
 | `UPPER hello`   | `HELLO`             |
 | `LOWER HELLO`   | `hello`             |
 | `REVERSE hello` | `olleh`             |
-| `TIME`          | current server time |
 | `QUIT`          | closes connection   |
 | unknown command | error message       |
 
@@ -178,13 +173,17 @@ npm run test:watch
 8. Update this README to describe the final protocol.
 
 ## Reflection Questions
-
-Answer the following questions in your submission:
-
-1. What is the difference between the client and the server?
-2. Why does the server need to keep running after handling one request?
-3. What happens if two clients connect at the same time?
-4. How is this different from HTTP?
+1.) What is the difference between the client and the server?
+    - Clients request a service while the server provides a service. They have different responsibilities and communicate across a
+    network boundary. Clients initiate communication, sends requests and displays results. Servers listen for/recieve requests, applies logic to client arguments, accesses databases and sends responses or results to clients.
+2.) Why does the server need to keep running after handling one request?
+    -A server needs to keep running after handling one requests so that it can continue to listen for and recieve other requests
+     to complete. It would not be ideal to have a server who simply completed one requests and then shutdown. Continuing to run allows them to handle many requests over time.
+3.) What happens if two clients connect at the same time?
+    -In the case of this code and running two different clients, they both connect with different identifiers and are able to send 
+     commands to the server. They both get different generated socket objects.
+4.) How is this different from HTTP?
+    - HTTP would be higher level than this client/server setup by buidling on the request/response model. HTTP uses more structured client requests with headers, urls, status codes, etc. while this is much more simple with custom commands.
 
 ## Submission
 

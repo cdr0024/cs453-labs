@@ -12,7 +12,7 @@ const server = net.createServer((socket) => {
   socket.setEncoding("utf8");
 
   socket.write("Welcome to the CS453 command server.\n");
-  socket.write("Commands: ECHO, UPPER, LOWER, REVERSE, TIME, QUIT\n");
+  socket.write("Commands: ECHO, UPPER, LOWER, REVERSE, QUIT\n");
 
   socket.on("data", (data) => {
     const lines = data.split(/\r?\n/).filter((line) => line.length > 0);
