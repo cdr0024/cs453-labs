@@ -38,16 +38,61 @@ export function readJsonBody(req) {
 }
 
 export function handleCalculate(body) {
+    const {operation, a, b} = body;
     // TODO: Validate that operation, a, and b are present.
+    if (operation === undefined || a === undefined || b === undefined){
+        return {
+            statusCode: 400, 
+            response: {error: "Missing fields. Either operation, a or b are not defined"}
+        };
+    }
     // TODO: Validate that a and b are numbers.
+    if (typeof a !== "number" || typeof b !== "number"){
+        return {
+            statusCode: 400,
+            response:{error: "a and b must be numbers"}
+        }
+    }
     // TODO: Support add, subtract, multiply, and divide.
-    // TODO: Return an error for unsupported operations.
-    // TODO: Return an error for division by zero.
+    if (operation === "add"){
+        return {
+            statusCode: 200,
+            response: {result: a + b}
+        };
+    }
 
+    if (operation === "subtract"){
+        return {
+            statusCode: 200,
+            response: {result: a-b}
+        };
+    }
+
+    if (operation === "multiply"){
+        return {
+            statusCode: 200,
+            response: { result: a * b}
+        };
+    }
+
+    if (operation === "divide"){
+        // TODO: Return an error for division by zero.
+        if (b === 0) {
+            return {
+                statusCode: 400,
+                response: {error: "Can't Divide by zero"}
+            }
+        };
+        return {
+            statusCode: 200,
+            response: {result: a/b}
+        };
+    }
+    // TODO: Return an error for unsupported operations.
     return {
-        statusCode: 501,
+        statusCode: 400,
         response: {
-            error: "Calculation not implemented yet"
+            error: "Operation not supported"
         }
     };
 }
@@ -65,7 +110,7 @@ export async function requestHandler(req, res) {
 
     if (method === "GET" && url === "/requests") {
         // TODO: Return the current request count as JSON.
-        sendJson(res, 501, { error: "Request counter not implemented yet" });
+        sendJson(res, 200, { count: requestCount });
         return;
     }
 
@@ -74,7 +119,7 @@ export async function requestHandler(req, res) {
             const body = await readJsonBody(req);
 
             // TODO: Return the parsed JSON body back to the client.
-            sendJson(res, 501, { error: "Echo not implemented yet" });
+            sendJson(res, 200, body);
         } catch {
             sendJson(res, 400, { error: "Invalid JSON" });
         }
@@ -106,7 +151,10 @@ export function resetState() {
     requestCount = 0;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+//changes made because the server would automatically close without listening
+import { pathToFileURL } from "node:url";
+
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     const port = process.env.PORT || DEFAULT_PORT;
     const server = createServer();
 

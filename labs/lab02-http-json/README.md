@@ -4,6 +4,8 @@ In Lab 1, you worked directly with a TCP socket and created a small command-base
 
 In this lab, you will move up one layer and build a small HTTP JSON service. Instead of inventing your own command format, you will use HTTP methods, paths, status codes, headers, and JSON request/response bodies.
 
+lab tested and completed with Visual Studio Code/Windows 11
+
 ## Learning Goals
 
 By the end of this lab, you should be able to:
@@ -201,6 +203,12 @@ curl -X POST http://localhost:3000/echo \
   -H "Content-Type: application/json" \
   -d '{"message":"hello"}'
 ```
+Use this command instead as I ran into issues with powershell using the curl command above because of powershelss JSON formatting:
+***
+curl.exe -X POST http://localhost:3000/echo `
+  -H "Content-Type: application/json" `
+  --data-raw '{\"message\":\"hello\"}'
+***
 
 Example `POST /calculate` request:
 
@@ -209,6 +217,26 @@ curl -X POST http://localhost:3000/calculate \
   -H "Content-Type: application/json" \
   -d '{"operation":"add","a":2,"b":3}'
 ```
+use this for Windows powershell Json formatting
+***
+curl.exe -X POST http://localhost:3000/calculate `
+  -H "Content-Type: application/json" `
+  --data-raw '{\"operation\":\"add\",\"a\":2,\"b\":3}'
+***
+
+test for if a or b are not numbers:
+***
+curl.exe -X POST http://localhost:3000/calculate `
+  -H "Content-Type: application/json" `
+  --data-raw '{\"operation\":\"subtract\",\"a\":\"t\",\"b\":6}'
+***
+
+testing for missing fields:
+***
+curl.exe -X POST http://localhost:3000/calculate `
+  -H "Content-Type: application/json" `
+  --data-raw '{\"operation\":\"subtract\",\"a\":\"t\"}'  
+  ***
 
 ## Configuring the Port
 
@@ -269,10 +297,17 @@ npm run test:watch
 Answer the following questions in your submission:
 
 1. What is the difference between a TCP message and an HTTP request?
+You have to be a lot more careful with structuring your HTTP requests. TCP is more like raw data sent between computers while
+the HTTP requests have to be a lot more structured. HTTP builds off of TCP using the request/response model.
 2. What does the `Content-Type: application/json` header tell the server?
+It sets the formatting for data being sent to JSON
 3. Why should a server return different HTTP status codes for different situations?
+A server should return different HTTP status codes to help cue the client into what needs to be fixed to get the expected 
+response to their requests. It can help make it a bit easier to decipher what went wrong. It helps take the guess work out of everything and lets the client know if there was a failure, success, etc.
 4. What happens if the client sends invalid JSON?
+The server will respond to the client to let them know there was an error by returning a 400 status code and the "invalid json" message. If there is invalid json, the server will not be able to properly parse it to carry out the request.
 5. How is this lab different from Lab 1?
+In the first lab we worked directly with TCP and creating sockets. We created a simple command based server. That was different from this lab because we worked with HTTP which is a step up from TCP by building on the request/response model. It was also different because we were not creating our own custom commands. In this lab we used the more structured HTTP methods and status codes as well as building correct JSON bodies to be parsed.
 
 ## Graduate Students
 
