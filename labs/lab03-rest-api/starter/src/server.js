@@ -19,27 +19,68 @@ export function createApp() {
 
   // TODO: Return all items.
   app.get("/items", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    res.json(items);
   });
 
   // TODO: Return one item by ID.
   app.get("/items/:id", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const id = Number(req.params.id);
+    const item = items.find(item => item.id === id);
+
+    if(!item){
+      return res.status(404).json({error: "cannot find item"})
+    }
+
+    res.json(item);
   });
 
   // TODO: Create a new item.
   app.post("/items", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const {name, quantity} = req.body;
+
+    if (name === undefined || quantity === undefined){
+      return res.status(400).json({error: "name or quantity is missing"});
+    }
+    const newItem = {
+      id: nextId++,
+      name,
+      quantity
+    };
+
+    items.push(newItem);
+    res.status(201).json(newItem);
   });
 
   // TODO: Update an existing item.
   app.put("/items/:id", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const id = Number(req.params.id);
+    const item = items.find(item => item.id === id);
+    if (!item){
+      return res.status(404).json({error: "cannot find item"});
+
+    }
+    const {name, quantity} = req.body;
+
+    if (name === undefined || quantity === undefined) {
+      return res.status(400).json({error: "name or quantity is missing."});
+    }
+
+    item.name = name;
+    item.quantity = quantity;
+    res.json(item);
   });
 
   // TODO: Delete an existing item.
   app.delete("/items/:id", (req, res) => {
-    res.status(501).json({ error: "Not implemented yet" });
+    const id = Number(req.params.id);
+    const index = items.findIndex(item => item.id === id);
+
+    if (index === -1){
+      return res.status(404).json({error: "Cannot find the item"});
+
+    }
+    items.splice(index, 1);
+    res.status(204).send();
   });
 
   app.use((req, res) => {
@@ -49,7 +90,11 @@ export function createApp() {
   return app;
 }
 
-const isMainModule = process.argv[1] === new URL(import.meta.url).pathname;
+//had to make small formatting changes here for Windows because the server was closing after running
+import { fileURLToPath } from "url";
+
+const isMainModule =
+  process.argv[1] === fileURLToPath(import.meta.url);
 
 if (isMainModule) {
   const PORT = process.env.PORT || 3000;
