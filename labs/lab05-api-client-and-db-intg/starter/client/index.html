@@ -33,6 +33,39 @@
           <button type="submit">Add Item</button>
         </form>
 
+        <h2>Get Item</h2>
+
+        <form id="get-item-form">
+          <label> 
+            Item ID
+            <input id="get-item-id" type="number" min="1" required>
+          </label>
+
+          <button id="get-item-button" type="button">Get Item</button>
+        </form>
+
+        <h2>Update/delete item</h2>
+
+          <label>
+            Item ID
+            <input id="update-item-id" type="number" min="1" required>
+          </label>
+
+          <label>
+            Name 
+            <input id="update-item-name" type="text">
+          </label>
+
+          <label>
+            Quantity
+            <input id="update-item-quantity" type="text">
+          </label>
+
+          <button id="put-item" type="button">Replace Item (PUT)</button>
+          <button id="patch-item" type="button">Update Item (PATCH)</button>
+          <button id="delete-item" type="button">Delete Item</button>
+
+
         <p id="status" class="status">Ready.</p>
 
         <ul id="items" class="items"></ul>

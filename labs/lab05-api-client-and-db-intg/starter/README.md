@@ -47,20 +47,20 @@ and connect it to the database.
 
 ### 1. What changed when the API moved from in-memory data to Postgres?
 
-TODO
+The data changed from temporary to persistent with the change. The in-memory data restarted with the server. Using Postgres allows the data to stay even when the server restarts
 
 ### 2. When should you use `PUT` instead of `PATCH`?
 
-TODO
+PUT is used for replacing an entire item while PATCH should be used when you want to only change part of an item.
 
 ### 3. What kinds of validation belong in the API even if the browser client also validates input?
 
-TODO
+The API needs to validate thing like required fields, correct types and valid values. The API needs this validation even if the browser client also validates it because clients can sometimes be bypassed. The added protection keeps verything valid across the board.
 
 ### 4. How does the browser client help you test the API differently than `curl` alone?
 
-TODO
+The browser client helps you test the API by giving you a more realistic way a user would interact with it. It also helps tie frontend to backend so that you can see everything works cohesively together.
 
 ### 5. If you added an extension, what did you add and why?
 
-TODO
+I did not add an optonal extension, since they were labeled as optional and I did not have extra time since still developing the midterm and the checkpoint 1 projects
