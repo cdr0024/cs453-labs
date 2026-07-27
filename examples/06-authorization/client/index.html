@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CS 453 Authorization Example</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script defer src="./app.js"></script>
+  </head>
+  <body>
+    <main>
+      <h1>JWT Authentication + Authorization</h1>
+
+      <p>
+        Log in to receive a JWT, then use it as a Bearer token when calling the
+        API. Signed-in users can load items; only admins can add them.
+      </p>
+
+      <section>
+        <h2>Login</h2>
+        <form id="login-form">
+          <label for="username">Username</label>
+          <input id="username" name="username" autocomplete="username" required />
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required />
+          <button type="submit">Log In</button>
+          <button id="logout" type="button">Log Out</button>
+        </form>
+        <p id="identity">Not logged in.</p>
+        <p>
+          Demo accounts: <code>user</code> / <code>user-password</code> and
+          <code>admin</code> / <code>admin-password</code>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Items</h2>
+        <button id="load-items">Load Items</button>
+        <ul id="items"></ul>
+      </section>
+
+      <section>
+        <h2>Add Item</h2>
+        <form id="add-item-form">
+          <label for="item-name">Item name</label>
+          <input id="item-name" name="name" required />
+          <button type="submit">Add</button>
+        </form>
+      </section>
+
+      <section>
+        <h2>Status</h2>
+        <pre id="status">Ready.</pre>
+      </section>
+    </main>
+  </body>
+</html>
