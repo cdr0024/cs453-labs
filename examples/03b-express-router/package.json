@@ -1,0 +1,14 @@
+{
+  "name": "example-03b-express-router",
+  "version": "1.0.0",
+  "description": "Express routes organized with Router modules for CS453",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "server": "node src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

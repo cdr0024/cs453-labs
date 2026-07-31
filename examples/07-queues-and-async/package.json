@@ -1,0 +1,17 @@
+{
+  "name": "cs453-example-07-queues-and-async",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CS 453/553 example: asynchronous work distribution with RabbitMQ.",
+  "scripts": {
+    "producer": "node producer/server.js",
+    "consumer": "node consumer/worker.js",
+    "dev:producer": "node --watch producer/server.js",
+    "dev:consumer": "node --watch consumer/worker.js"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.8",
+    "express": "^4.21.2"
+  }
+}
